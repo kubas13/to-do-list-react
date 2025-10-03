@@ -102,7 +102,7 @@
     outline: 1px solid hsl(200, 100%, 50%);
   }
   
-  .list li input {
+  .list li input.checkbox {
     outline: none;
     width: 0;
     height: 0;
@@ -110,6 +110,17 @@
     pointer-events: none;
     position: absolute;
   }
+
+  .list li input[type="text"] {
+  width: 200px;
+  height: 30px;
+  font-size: 16px;
+  padding: 4px;
+  border: 1px solid hsl(200, 100%, 40%);
+  border-radius: 0.25em;
+  background: hsl(200, 100%, 30%);
+  color: hsl(200, 100%, 90%);
+}
   
   .list li label::before {
     content: "";
