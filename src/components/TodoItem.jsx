@@ -1,26 +1,23 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { Modal } from "./CustomModal"; 
 
 export function TodoItem({ completed, id, title, toggleTodo, deleteTodo, updateTodo }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editText, setEditText] = useState(title);
-
-  // Synchronizacja editText, gdy title zmienia się w props
-  useEffect(() => {
-    setEditText(title);
-  }, [title]);
+  const [showModal, setShowModal] = useState(false);
 
   const handleSave = () => {
-    if (editText.trim() === "") return; // blokada pustego tytułu
     updateTodo(id, editText);
     setIsEditing(false);
   };
 
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") handleSave();
-    if (e.key === "Escape") {
-      setIsEditing(false);
-      setEditText(title);
-    }
+  const handleDelete = () => {
+    setShowModal(true); 
+  };
+
+  const confirmDelete = () => {
+    deleteTodo(id);
+    setShowModal(false);
   };
 
   return (
@@ -31,8 +28,13 @@ export function TodoItem({ completed, id, title, toggleTodo, deleteTodo, updateT
             type="text"
             value={editText}
             onChange={(e) => setEditText(e.target.value)}
-            onKeyDown={handleKeyDown}
-            autoFocus
+            style={{
+              width: "200px",
+              height: "30px",
+              fontSize: "16px",
+              padding: "4px",
+              borderRadius: "4px",
+            }}
           />
           <button onClick={handleSave} className="btn btn-save">
             Save
@@ -52,10 +54,18 @@ export function TodoItem({ completed, id, title, toggleTodo, deleteTodo, updateT
           <button onClick={() => setIsEditing(true)} className="btn btn-edit">
             Edit
           </button>
-          <button onClick={() => deleteTodo(id)} className="btn btn-delete">
+          <button onClick={handleDelete} className="btn btn-delete">
             Delete
           </button>
         </>
+      )}
+      {showModal && (
+        <Modal
+          title="Confirm Delete"
+          message={`Are you sure you want to delete "${title}"?`}
+          onConfirm={confirmDelete}
+          onCancel={() => setShowModal(false)}
+        />
       )}
     </li>
   );
