@@ -10,17 +10,33 @@
     padding: 1rem;
     margin: 0 auto;
   }
+
+  .App {
+    max-width: 500px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    background-color: hsl(200, 100%, 15%);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  }
+
+  button {
+    transition: all 0.25 ease;
+  }
+  
   
   .new-item-form {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    margin-bottom: 1rem;
   }
   
   .form-row {
     display: flex;
     flex-direction: column;
-    gap: 0.1rem;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
     
   }
   
@@ -49,19 +65,48 @@
   .btn.btn-danger:focus-visible {
     background: hsl(0, 100%, 40%, 0.2);
   }
+  .new-item-form .form-row {
+    display: flex;
+    gap: 0.5rem;
+    align-items: stretch;
+  }
   
   .new-item-form input {
-    outline: none;
+    flex: 1;
+    padding: 0.5rem;
+    border-radius: 8px;
     border: 1px solid hsl(200, 100%, 40%);
-    background: hsl(200, 100%, 30%);
-    border-radius: 0.25em;
-    padding: 0.25em 0.5em;
+    background: hsl(200, 100%, 25%);
     color: hsl(200, 100%, 90%);
+    font-size: 1rem;
+
+  }
+
+  .new-item-form input:focus {
+    border: 1px solid hsl(200, 100%, 50%);
+  }
+
+  .new-item-form .btn {
+    padding: 0.5rem 1rem;
+    background-color: hsl(200, 100%, 50%);
+    border-radius: 8px;
+    border: 1px solid hsl(200, 100%, 50%);
+    color: hsl(200, 100%, 90%);
+    font-weight: bold;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    transition: all 0.25 ease;
+    
   }
   
-  .new-item-form input:focus {
-    border: 1px solid hsl(200, 100%, 70%);
+  .new-item-form .btn:hover {
+    background: linear-gradient(145deg, hsl(200, 100%, 25%), hsl(200, 100%, 30%));
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.35);
+
   }
+
 
   .new-item-form label {
     display: block;
@@ -70,39 +115,48 @@
   }
   
   .header {
-    font-size: 1.5rem;
-    margin-top: 1.5rem;
-    margin-bottom: 0.5rem;
-    display: flex;
-    justify-content: center;
-  }
-  
-  .list {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-  
-  .list li:has(input:checked) label {
-    color: hsl(200, 20%, 40%);
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 1rem;
+    color: hsl(200, 100%, 90%);
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
   }
   
   .list {
     display: flex;
     flex-direction: column;
-    gap: 0.3rem;
-
-    border: 2px solid hsl(200,100%, 50%);
-    border-radius: 8px;
+    gap: 0.5rem;
+    border: 2px solid hsl(200, 100%, 50%);
+    border-radius: 12px;
     padding: 1rem;
-    background: hsl(200, 100%, 15%);
+    background-color: hsl(200, 100%, 15%);
   }
+  
+  .list li:has(input:checked) label {
+    color: hsl(200, 20%, 40%);
+  }
+
   
   .list li {
     display: flex;
-    gap: 0.5rem;
+    justify-content: space-between;
     align-items: center;
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    background-color: hsl(200, 100%, 20%);
+    transition: 0.2s;
 
+  }
+
+  .list li:hover {
+    background-color: hsl(200, 100%, 25%);
+  }
+
+  .list li.completed {
+    color: hsl(200,20%,50%);
+    text-decoration: line-through;
+    background-color: hsl(200, 100%, 18%);
   }
   
   .list li label {
@@ -192,17 +246,88 @@
   margin-top: 1rem;
 }
 
-.btn-cancel {
-  background: hsl(0, 100%, 40%, 0.2);
-  border: 1px solid hsl(0, 100%, 40%);
-  color: hsl(0, 100%, 70%);
+.modal-buttons button {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  border: none;
 }
 
-.btn-confirm {
-  background: hsl(200, 100%, 40%, 0.2);
-  border: 1px solid hsl(200, 100%, 50%);
-  color: hsl(200, 100%, 80%);
+
+
+.modal-buttons .btn-cancel {
+  background: hsl(0, 100%, 40%);
+  color: white;
 }
+
+.modal-buttons .btn-cancel:hover {
+  background-color: hsl(0, 100%, 30%);
+}
+
+.modal-buttons .btn-confirm {
+  background: hsl(200, 100%, 50%);
+  color: white;
+}
+
+.modal-buttons .btn-confirm:hover {
+  background-color: hsl(200, 100%, 30%);
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.filter-buttons, .sort-buttons, .clear-buttons {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.filter-buttons button,
+.sort-buttons button,
+.clear-buttons button {
+  flex: 1 1 45;
+  min-width: 120px;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid hsl(200, 100%, 50%);
+  background: linear-gradient(145deg, hsl(200, 100%, 20%), hsl(200, 100%, 25%));
+  color: hsl(200, 100%, 90%);
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s all;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+.filter-buttons button:hover,
+.sort-buttons button:hover,
+.clear-buttons button:hover {
+ background: linear-gradient(145deg, hsl(200,100%,25%), hsl(200,100%,30%));
+ transform: translateY(-2px);
+ box-shadow: 0 4px 8px rgba(0,0,0,0.35);
+}
+
+.filter-buttons button:first-child {
+  flex: 1 1 100%;
+}
+
+.clear-buttons button.btn-danger {
+  border-color: hsl(0, 100%, 40%);
+  background: linear-gradient(145deg, hsl(0, 100%, 35%), hsl(0, 100%, 40%));
+  color: white;
+}
+
+.clear-buttons button.btn-danger:hover {
+  background: linear-gradient(145deg, hsl(0, 100%, 40%), hsl(0, 100%, 45%));
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.35);
+}
+
 
 @keyframes fadeIn {
   from { opacity: 0; transform: scale(0.9); }
