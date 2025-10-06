@@ -14,6 +14,9 @@ export default function App() {
   const [modalOpen, setModalOpen] = useState(true);
   const [filter, setFilter] = useState("all");
   const [sort, setSort] = useState("newest");
+  const [showDeleteCompleteModal, setShowDeleteCompletedModal] = useState(false);
+  const [showDeleteAllModal, setShowDeleteAllModal] = useState(false);
+  
 
   const addTodo = (title) => {
     setTodos((currentTodos) => [
@@ -34,9 +37,6 @@ export default function App() {
     setTodos((currentTodos) => currentTodos.filter((todo) => todo.id !== id));
   };
 
-  const clearCompleted = () => {
-    setTodos((currentTodos) => currentTodos.filter(todo => !todo.completed))
-  };
  
   const updateTodo = (id, newTitle) => {
     setTodos((currentTodos) =>
@@ -46,6 +46,19 @@ export default function App() {
     );
   };
 
+  const handleDeleteCompletedClick = () => setShowDeleteCompletedModal(true);
+  const handleDeleteAllClick = () => setShowDeleteAllModal(true);
+
+  const confirmDeleteCompleted = () => {
+    setTodos((todos) => todos.filter(todo => !todo.completed)); 
+    setShowDeleteCompletedModal(false);
+  }
+
+  const confirmDeleteAll = () => {
+    setTodos([]);
+    setShowDeleteAllModal(false);
+  }
+  
   useEffect(() => {
     localStorage.setItem("ITEMS", JSON.stringify(todos));
   }, [todos]);
@@ -89,6 +102,7 @@ export default function App() {
         />
       )}
 
+
       <NewTodoForm onSubmit={addTodo} />
       <h1 className="header">To do List</h1>
       <div className="controls">
@@ -102,11 +116,13 @@ export default function App() {
           <button onClick={() => setSort("newest")}>Newest</button>
           <button onClick={() => setSort("oldest")}>Oldest</button>
           <button onClick={() => setSort("a-z")}>A-Z</button>
-          <button onClick={() => setSort("Z-A")}>Z-A</button>
+          <button onClick={() => setSort("z-a")}>Z-A</button>
         </div>
-        <div className="clear-button">
-          <button onClick={clearCompleted}>delete completed</button>
+        <div className="clear-buttons">
+          <button onClick={handleDeleteCompletedClick}>delete completed</button>
+          <button onClick={handleDeleteAllClick}>delete all</button>
         </div>
+        
           
       </div>
       <TodoList
@@ -115,6 +131,23 @@ export default function App() {
         deleteTodo={deleteTodo}
         updateTodo={updateTodo}
       />
+      {showDeleteCompleteModal && (
+        <Modal
+        title="Delete all completed tasks?"
+        message="This will remove all completed tasks. Are you sure?"
+        onConfirm={confirmDeleteCompleted}
+        onCancel={() => setShowDeleteCompletedModal(false)}
+        />
+      )}
+
+      {showDeleteAllModal && (
+        <Modal 
+        title="Delete all tasks?"
+        message="This will remove all your tasks. Are you sure?"
+        onConfirm={confirmDeleteAll}
+        onCancel={() => setShowDeleteAllModal(false)}
+        />
+      )}
     </>
   );
 }
