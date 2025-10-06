@@ -91,7 +91,7 @@ export default function App() {
 
 
   return (
-    <>
+    <div className="App">
       {modalOpen && (
         <Modal
           title="Welcome in To-Do App!"
@@ -102,9 +102,8 @@ export default function App() {
         />
       )}
 
-
-      <NewTodoForm onSubmit={addTodo} />
       <h1 className="header">To do List</h1>
+      <NewTodoForm onSubmit={addTodo} />
       <div className="controls">
         <div className="filter-buttons">
           <button onClick={() => setFilter("all")}>All tasks</button>
@@ -119,8 +118,8 @@ export default function App() {
           <button onClick={() => setSort("z-a")}>Z-A</button>
         </div>
         <div className="clear-buttons">
-          <button onClick={handleDeleteCompletedClick}>delete completed</button>
-          <button onClick={handleDeleteAllClick}>delete all</button>
+          <button onClick={handleDeleteCompletedClick}>Delete completed</button>
+          <button onClick={handleDeleteAllClick}>Delete all</button>
         </div>
         
           
@@ -148,7 +147,7 @@ export default function App() {
         onCancel={() => setShowDeleteAllModal(false)}
         />
       )}
-    </>
+    </div>
   );
 }
 

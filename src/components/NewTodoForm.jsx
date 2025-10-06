@@ -16,16 +16,16 @@ export function NewTodoForm(props) {
 
   return (
     <form onSubmit={handleSubmit} className="new-item-form">
+      <label htmlFor="item">Add your thing to do</label>
       <div className="form-row">
-        <label htmlFor="item">Add your thing to do</label>
         <input
           value={newItem}
           onChange={(e) => setNewItem(e.target.value)}
           type="text"
           id="item"
-        ></input>
-      </div>
+        />
       <button className="btn">Add</button>
+      </div>
     </form>
   );
 }
