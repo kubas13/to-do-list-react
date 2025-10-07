@@ -94,15 +94,14 @@ export default function App() {
     <div className="App">
       {modalOpen && (
         <Modal
-          title="Welcome in To-Do App!"
-          message="You can manage your to-do list here"
-          onCancel={() => setModalOpen(false)}
+          title="Welcome in To Do List App!"
+          message="You can manage your to do list here"
           onConfirm={() => setModalOpen(false)}
           
         />
       )}
 
-      <h1 className="header">To do List</h1>
+      <h1 className="header">To Do List</h1>
       <NewTodoForm onSubmit={addTodo} />
       <div className="controls">
         <div className="filter-buttons">

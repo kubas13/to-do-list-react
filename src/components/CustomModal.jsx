@@ -5,7 +5,11 @@ export function Modal({ title, message, onConfirm, onCancel }) {
         <h2>{title}</h2>
         <p>{message}</p>
         <div className="modal-buttons">
-        <button className="btn btn-cancel" onClick={onCancel}>Cancel</button>
+          {onCancel && (
+            <button className="btn btn-cancel" onClick={onCancel}>
+              Cancel
+            </button>
+          )}
         <button className="btn btn-confirm" onClick={onConfirm}>OK</button>
         </div>
       </div>
