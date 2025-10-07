@@ -7,6 +7,7 @@ export function TodoItem({
   title,
   date,
   time,
+  note,
   toggleTodo,
   deleteTodo,
   updateTodo,
@@ -14,6 +15,9 @@ export function TodoItem({
   const [isEditing, setIsEditing] = useState(false);
   const [editText, setEditText] = useState(title);
   const [showModal, setShowModal] = useState(false);
+  const [showNoteModal, setShowNoteModal] = useState(false);
+  const [noteText, setNoteText] = useState(note || "");
+  const [tempNote, setTempNote] = useState(note || "");
 
   const handleSave = () => {
     updateTodo(id, editText);
@@ -27,6 +31,17 @@ export function TodoItem({
   const confirmDelete = () => {
     deleteTodo(id);
     setShowModal(false);
+  };
+
+  const openNoteModal = () => {
+    setTempNote(noteText);
+    setShowNoteModal(true);
+  };
+
+  const confirmNote = () => {
+    setNoteText(tempNote);
+    updateTodo(id, editText, tempNote);
+    setShowNoteModal(false);
   };
 
   return (
@@ -72,12 +87,33 @@ export function TodoItem({
             <button onClick={() => setIsEditing(true)} className="btn btn-edit">
               Edit
             </button>
+            <button onClick={openNoteModal} className="btn btn-note">
+              Add note
+            </button>
             <button onClick={handleDelete} className="btn btn-delete">
               Delete
             </button>
           </div>
         </>
       )}
+
+      {showNoteModal && (
+        <Modal
+          title="Add a note"
+          message={
+            <textarea
+              value={tempNote}
+              onChange={(e) => setTempNote(e.target.value)}
+              rows={4}
+              style={{ width: "100%", padding: "8px", borderRadius: "8px" }}
+              placeholder="Write your note here..."
+            />
+          }
+          onConfirm={confirmNote}
+          onCancel={() => setShowNoteModal(false)}
+        />
+      )}
+
       {showModal && (
         <Modal
           title="Confirm Delete"

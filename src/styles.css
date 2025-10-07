@@ -350,6 +350,14 @@
   gap: 0.5rem;
 }
 
+.todo-note {
+  font-size: 0.9rem;
+  color: hsl(45, 100%, 80%);
+  margin-top: 4px;
+  font-style: italic;
+  white-space: pre-wrap;
+}
+
 
 @keyframes fadeIn {
   from { opacity: 0; transform: scale(0.9); }

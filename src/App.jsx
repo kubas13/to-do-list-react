@@ -18,7 +18,7 @@ export default function App() {
   const [showDeleteAllModal, setShowDeleteAllModal] = useState(false);
 
 
-  const addTodo = ({ title, date, time }) => {
+  const addTodo = ({ title, date, time, note = "" }) => {
     setTodos((currentTodos) => [
       ...currentTodos,
       {
@@ -26,6 +26,7 @@ export default function App() {
         title,
         date,
         time,
+        note,
         completed: false,
       },
     ]);
