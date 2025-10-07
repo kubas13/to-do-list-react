@@ -1,7 +1,16 @@
 import { useState } from "react";
-import { Modal } from "./CustomModal"; 
+import { Modal } from "./CustomModal";
 
-export function TodoItem({ completed, id, title, toggleTodo, deleteTodo, updateTodo }) {
+export function TodoItem({
+  completed,
+  id,
+  title,
+  date,
+  time,
+  toggleTodo,
+  deleteTodo,
+  updateTodo,
+}) {
   const [isEditing, setIsEditing] = useState(false);
   const [editText, setEditText] = useState(title);
   const [showModal, setShowModal] = useState(false);
@@ -12,7 +21,7 @@ export function TodoItem({ completed, id, title, toggleTodo, deleteTodo, updateT
   };
 
   const handleDelete = () => {
-    setShowModal(true); 
+    setShowModal(true);
   };
 
   const confirmDelete = () => {
@@ -21,7 +30,7 @@ export function TodoItem({ completed, id, title, toggleTodo, deleteTodo, updateT
   };
 
   return (
-    <li>
+    <li className={completed ? "completed" : ""}>
       {isEditing ? (
         <>
           <input
@@ -49,14 +58,24 @@ export function TodoItem({ completed, id, title, toggleTodo, deleteTodo, updateT
               checked={completed}
               onChange={(e) => toggleTodo(id, e.target.checked)}
             />
-            {title}
+            <div className="todo-content">
+              <span className="todo-title">{title}</span>
+              {(date || time) && (
+                <span className="todo-datetime">
+                  {date || "-"} {time || "-"}
+                </span>
+              )}
+            </div>
           </label>
-          <button onClick={() => setIsEditing(true)} className="btn btn-edit">
-            Edit
-          </button>
-          <button onClick={handleDelete} className="btn btn-delete">
-            Delete
-          </button>
+
+          <div className="todo-actions">
+            <button onClick={() => setIsEditing(true)} className="btn btn-edit">
+              Edit
+            </button>
+            <button onClick={handleDelete} className="btn btn-delete">
+              Delete
+            </button>
+          </div>
         </>
       )}
       {showModal && (

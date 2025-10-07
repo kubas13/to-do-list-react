@@ -2,7 +2,7 @@ import { useEffect, useState, useMemo } from "react";
 import "./styles.css";
 import { NewTodoForm } from "./components/NewTodoForm";
 import { TodoList } from "./components/ToDoList";
-import Modal from "./components/CustomModal"; 
+import Modal from "./components/CustomModal";
 
 export default function App() {
   const [todos, setTodos] = useState(() => {
@@ -16,12 +16,18 @@ export default function App() {
   const [sort, setSort] = useState("newest");
   const [showDeleteCompleteModal, setShowDeleteCompletedModal] = useState(false);
   const [showDeleteAllModal, setShowDeleteAllModal] = useState(false);
-  
 
-  const addTodo = (title) => {
+
+  const addTodo = ({ title, date, time }) => {
     setTodos((currentTodos) => [
       ...currentTodos,
-      { id: crypto.randomUUID(), title, completed: false },
+      {
+        id: crypto.randomUUID(),
+        title,
+        date,
+        time,
+        completed: false,
+      },
     ]);
   };
 
@@ -37,7 +43,7 @@ export default function App() {
     setTodos((currentTodos) => currentTodos.filter((todo) => todo.id !== id));
   };
 
- 
+
   const updateTodo = (id, newTitle) => {
     setTodos((currentTodos) =>
       currentTodos.map((todo) =>
@@ -50,7 +56,7 @@ export default function App() {
   const handleDeleteAllClick = () => setShowDeleteAllModal(true);
 
   const confirmDeleteCompleted = () => {
-    setTodos((todos) => todos.filter(todo => !todo.completed)); 
+    setTodos((todos) => todos.filter(todo => !todo.completed));
     setShowDeleteCompletedModal(false);
   }
 
@@ -58,14 +64,14 @@ export default function App() {
     setTodos([]);
     setShowDeleteAllModal(false);
   }
-  
+
   useEffect(() => {
     localStorage.setItem("ITEMS", JSON.stringify(todos));
   }, [todos]);
 
-  const filteredAndSortedTodos = useMemo(() =>  {
+  const filteredAndSortedTodos = useMemo(() => {
     if (!Array.isArray(todos)) return [];
-    let filtered = todos; 
+    let filtered = todos;
     if (filter === "active") filtered = todos.filter(t => !t.completed);
     if (filter === "completed") filtered = todos.filter(t => t.completed);
     let sorted = [...filtered];
@@ -84,8 +90,8 @@ export default function App() {
         break;
     }
     return sorted;
-    
-  },[todos, filter, sort]);
+
+  }, [todos, filter, sort]);
 
   console.log("todos:", todos, "filter:", filter, "sort:", sort);
 
@@ -97,7 +103,7 @@ export default function App() {
           title="Welcome in To Do List App!"
           message="You can manage your to do list here"
           onConfirm={() => setModalOpen(false)}
-          
+
         />
       )}
 
@@ -120,8 +126,8 @@ export default function App() {
           <button onClick={handleDeleteCompletedClick}>Delete completed</button>
           <button onClick={handleDeleteAllClick}>Delete all</button>
         </div>
-        
-          
+
+
       </div>
       <TodoList
         todos={filteredAndSortedTodos}
@@ -131,19 +137,19 @@ export default function App() {
       />
       {showDeleteCompleteModal && (
         <Modal
-        title="Delete all completed tasks?"
-        message="This will remove all completed tasks. Are you sure?"
-        onConfirm={confirmDeleteCompleted}
-        onCancel={() => setShowDeleteCompletedModal(false)}
+          title="Delete all completed tasks?"
+          message="This will remove all completed tasks. Are you sure?"
+          onConfirm={confirmDeleteCompleted}
+          onCancel={() => setShowDeleteCompletedModal(false)}
         />
       )}
 
       {showDeleteAllModal && (
-        <Modal 
-        title="Delete all tasks?"
-        message="This will remove all your tasks. Are you sure?"
-        onConfirm={confirmDeleteAll}
-        onCancel={() => setShowDeleteAllModal(false)}
+        <Modal
+          title="Delete all tasks?"
+          message="This will remove all your tasks. Are you sure?"
+          onConfirm={confirmDeleteAll}
+          onCancel={() => setShowDeleteAllModal(false)}
         />
       )}
     </div>

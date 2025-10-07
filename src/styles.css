@@ -328,6 +328,28 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.35);
 }
 
+.todo-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.todo-title {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: hsl(200, 100%, 90%);
+}
+
+.todo-datetime {
+  font-size: 0.85rem;
+  color: hsl(200, 50%, 75%);
+  margin-top: 2px;
+}
+
+.todo-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
 
 @keyframes fadeIn {
   from { opacity: 0; transform: scale(0.9); }
