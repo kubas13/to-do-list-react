@@ -328,9 +328,18 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.35);
 }
 
+.todo-label {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+  cursor: pointer;
+  width: 100%;
+}
+
 .todo-content {
   display: flex;
   flex-direction: column;
+  flex: 1;
 }
 
 .todo-title {
@@ -348,6 +357,18 @@
 .todo-actions {
   display: flex;
   gap: 0.5rem;
+  margin-left: 0.5rem;
+}
+
+.todo-edit-input {
+  width: 200px;
+  height: 30px;
+  font-size: 16px;
+  padding: 4px;
+  border: 1px solidd hsl(200, 100%, 40%);
+  border-radius: 0.25rem;
+  background: hsl(200, 100%, 30%);
+  color: hsl(200, 100%,)
 }
 
 .todo-note {
@@ -357,6 +378,60 @@
   font-style: italic;
   white-space: pre-wrap;
 }
+
+.todo-meta {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  margin-top: 2px;
+}
+
+.undo-popup {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #f5f5f5;
+  color: #333;
+  padding: 10px 16px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  font-weight: 500;
+  z-index: 1000;
+  animation: fadeInUp 0.25s ease-out;
+
+}
+
+.undo-popup button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s ease;
+}
+
+.undo-popup button:hover {
+  background-color: #0056b3;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 20px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
 
 
 @keyframes fadeIn {

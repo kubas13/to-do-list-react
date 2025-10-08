@@ -73,12 +73,15 @@ export function TodoItem({
               checked={completed}
               onChange={(e) => toggleTodo(id, e.target.checked)}
             />
-            <div className="todo-content">
-              <span className="todo-title">{title}</span>
+
+            <div className="todo-main">
+              <div className="todo-header">
+                <span className="todo-title">{title}</span>
+              </div>
               {(date || time) && (
-                <span className="todo-datetime">
+                <div className="todo-meta">
                   {date || "-"} {time || "-"}
-                </span>
+                </div>
               )}
             </div>
           </label>
@@ -88,7 +91,7 @@ export function TodoItem({
               Edit
             </button>
             <button onClick={openNoteModal} className="btn btn-note">
-              Add note
+              Note
             </button>
             <button onClick={handleDelete} className="btn btn-delete">
               Delete

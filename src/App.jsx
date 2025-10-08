@@ -16,9 +16,14 @@ export default function App() {
   const [sort, setSort] = useState("newest");
   const [showDeleteCompleteModal, setShowDeleteCompletedModal] = useState(false);
   const [showDeleteAllModal, setShowDeleteAllModal] = useState(false);
+  const [lastDeleted, setLastDeleted] = useState(null);
+  const [showUndo, setShowUndo] = useState(false);
+  
+
+  let undoTimeoutRef = null;
 
 
-  const addTodo = ({ title, date, time, note = "" }) => {
+  const addTodo = ({ title, date, time, note = "" , priority}) => {
     setTodos((currentTodos) => [
       ...currentTodos,
       {
@@ -27,6 +32,7 @@ export default function App() {
         date,
         time,
         note,
+        priority,
         completed: false,
       },
     ]);
@@ -41,8 +47,32 @@ export default function App() {
   };
 
   const deleteTodo = (id) => {
-    setTodos((currentTodos) => currentTodos.filter((todo) => todo.id !== id));
+    setTodos((currentTodos) => {
+      const deletedTodo = currentTodos.find((todo) => todo.id === id);
+      if (!deletedTodo) return currentTodos;
+
+      setLastDeleted(deletedTodo);
+      setShowUndo(true);
+
+
+      clearTimeout(undoTimeoutRef);
+      undoTimeoutRef = setTimeout(() => {
+        setShowUndo(false);
+        setLastDeleted(null);
+      }, 8000);
+
+      return currentTodos.filter((todo) => todo.id !== id);
+    })
   };
+
+  const handleUndo = () => {
+    if (lastDeleted) {
+      setTodos((prevTodos) => [...prevTodos, lastDeleted]);
+      setLastDeleted(null);
+      setShowUndo(false);
+      clearTimeout(undoTimeoutRef);
+    }
+  }
 
 
   const updateTodo = (id, newTitle) => {
@@ -152,6 +182,12 @@ export default function App() {
           onConfirm={confirmDeleteAll}
           onCancel={() => setShowDeleteAllModal(false)}
         />
+      )}
+      {showUndo && (
+        <div className="undo-popup">
+          <span>Task "{lastDeleted?.title}" was deleted.</span>
+          <button onClick={handleUndo}>Undo</button>
+          </div>
       )}
     </div>
   );
