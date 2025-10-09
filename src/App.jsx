@@ -14,16 +14,15 @@ export default function App() {
   const [modalOpen, setModalOpen] = useState(true);
   const [filter, setFilter] = useState("all");
   const [sort, setSort] = useState("newest");
-  const [showDeleteCompleteModal, setShowDeleteCompletedModal] = useState(false);
+  const [showDeleteCompleteModal, setShowDeleteCompletedModal] =
+    useState(false);
   const [showDeleteAllModal, setShowDeleteAllModal] = useState(false);
   const [lastDeleted, setLastDeleted] = useState(null);
   const [showUndo, setShowUndo] = useState(false);
-  
 
   let undoTimeoutRef = null;
 
-
-  const addTodo = ({ title, date, time, note = "" , priority}) => {
+  const addTodo = ({ title, date, time, note = "", priority }) => {
     setTodos((currentTodos) => [
       ...currentTodos,
       {
@@ -54,7 +53,6 @@ export default function App() {
       setLastDeleted(deletedTodo);
       setShowUndo(true);
 
-
       clearTimeout(undoTimeoutRef);
       undoTimeoutRef = setTimeout(() => {
         setShowUndo(false);
@@ -62,7 +60,7 @@ export default function App() {
       }, 8000);
 
       return currentTodos.filter((todo) => todo.id !== id);
-    })
+    });
   };
 
   const handleUndo = () => {
@@ -72,13 +70,17 @@ export default function App() {
       setShowUndo(false);
       clearTimeout(undoTimeoutRef);
     }
-  }
+  };
 
-
-  const updateTodo = (id, newTitle) => {
+  const updateTodo = (id, newTitle, newDate, newTime, newNote) => {
     setTodos((currentTodos) =>
       currentTodos.map((todo) =>
-        todo.id === id ? { ...todo, title: newTitle } : todo
+        todo.id === id ? { ...todo,
+           title: newTitle ?? todo.title,
+           date: newDate ?? todo.date,
+           time: newTime ?? todo.time,
+           note: newNote ?? todo.note,
+           } : todo
       )
     );
   };
@@ -87,14 +89,14 @@ export default function App() {
   const handleDeleteAllClick = () => setShowDeleteAllModal(true);
 
   const confirmDeleteCompleted = () => {
-    setTodos((todos) => todos.filter(todo => !todo.completed));
+    setTodos((todos) => todos.filter((todo) => !todo.completed));
     setShowDeleteCompletedModal(false);
-  }
+  };
 
   const confirmDeleteAll = () => {
     setTodos([]);
     setShowDeleteAllModal(false);
-  }
+  };
 
   useEffect(() => {
     localStorage.setItem("ITEMS", JSON.stringify(todos));
@@ -103,8 +105,8 @@ export default function App() {
   const filteredAndSortedTodos = useMemo(() => {
     if (!Array.isArray(todos)) return [];
     let filtered = todos;
-    if (filter === "active") filtered = todos.filter(t => !t.completed);
-    if (filter === "completed") filtered = todos.filter(t => t.completed);
+    if (filter === "active") filtered = todos.filter((t) => !t.completed);
+    if (filter === "completed") filtered = todos.filter((t) => t.completed);
     let sorted = [...filtered];
     switch (sort) {
       case "newest":
@@ -121,11 +123,9 @@ export default function App() {
         break;
     }
     return sorted;
-
   }, [todos, filter, sort]);
 
   console.log("todos:", todos, "filter:", filter, "sort:", sort);
-
 
   return (
     <div className="App">
@@ -134,7 +134,6 @@ export default function App() {
           title="Welcome in To Do List App!"
           message="You can manage your to do list here"
           onConfirm={() => setModalOpen(false)}
-
         />
       )}
 
@@ -157,8 +156,6 @@ export default function App() {
           <button onClick={handleDeleteCompletedClick}>Delete completed</button>
           <button onClick={handleDeleteAllClick}>Delete all</button>
         </div>
-
-
       </div>
       <TodoList
         todos={filteredAndSortedTodos}
@@ -187,9 +184,8 @@ export default function App() {
         <div className="undo-popup">
           <span>Task "{lastDeleted?.title}" was deleted.</span>
           <button onClick={handleUndo}>Undo</button>
-          </div>
+        </div>
       )}
     </div>
   );
 }
-

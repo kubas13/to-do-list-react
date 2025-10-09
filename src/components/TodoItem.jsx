@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Modal } from "./CustomModal";
+import { use } from "react";
 
 export function TodoItem({
   completed,
@@ -14,23 +15,29 @@ export function TodoItem({
 }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editText, setEditText] = useState(title);
-  const [showModal, setShowModal] = useState(false);
-  const [showNoteModal, setShowNoteModal] = useState(false);
+  const [editDate, setEditDate] = useState(date);
+  const [editTime, setEditTime] = useState(time);
   const [noteText, setNoteText] = useState(note || "");
   const [tempNote, setTempNote] = useState(note || "");
 
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showNoteModal, setShowNoteModal] = useState(false);
+
+  
+
   const handleSave = () => {
-    updateTodo(id, editText);
+    updateTodo(id, editText, editDate, editTime, noteText);
     setIsEditing(false);
   };
 
   const handleDelete = () => {
-    setShowModal(true);
+    setShowDeleteModal(true);
   };
 
   const confirmDelete = () => {
     deleteTodo(id);
-    setShowModal(false);
+    setShowDeleteModal(false);
   };
 
   const openNoteModal = () => {
@@ -40,32 +47,12 @@ export function TodoItem({
 
   const confirmNote = () => {
     setNoteText(tempNote);
-    updateTodo(id, editText, tempNote);
+    updateTodo(id, editText, editDate, editTime, tempNote);
     setShowNoteModal(false);
   };
 
   return (
     <li className={completed ? "completed" : ""}>
-      {isEditing ? (
-        <>
-          <input
-            type="text"
-            value={editText}
-            onChange={(e) => setEditText(e.target.value)}
-            style={{
-              width: "200px",
-              height: "30px",
-              fontSize: "16px",
-              padding: "4px",
-              borderRadius: "4px",
-            }}
-          />
-          <button onClick={handleSave} className="btn btn-save">
-            Save
-          </button>
-        </>
-      ) : (
-        <>
           <label>
             <input
               type="checkbox"
@@ -73,7 +60,6 @@ export function TodoItem({
               checked={completed}
               onChange={(e) => toggleTodo(id, e.target.checked)}
             />
-
             <div className="todo-main">
               <div className="todo-header">
                 <span className="todo-title">{title}</span>
@@ -87,7 +73,10 @@ export function TodoItem({
           </label>
 
           <div className="todo-actions">
-            <button onClick={() => setIsEditing(true)} className="btn btn-edit">
+            <button
+              onClick={() => setShowEditModal(true)}
+              className="btn btn-edit"
+            >
               Edit
             </button>
             <button onClick={openNoteModal} className="btn btn-note">
@@ -97,8 +86,7 @@ export function TodoItem({
               Delete
             </button>
           </div>
-        </>
-      )}
+      
 
       {showNoteModal && (
         <Modal
@@ -117,12 +105,63 @@ export function TodoItem({
         />
       )}
 
-      {showModal && (
+      {showDeleteModal && (
         <Modal
           title="Confirm Delete"
           message={`Are you sure you want to delete "${title}"?`}
           onConfirm={confirmDelete}
-          onCancel={() => setShowModal(false)}
+          onCancel={() => setShowDeleteModal(false)}
+        />
+      )}
+
+      {showEditModal && (
+        <Modal
+          title="Edit Task"
+          message={
+            <div className="edit-form">
+              <div className="form-row">
+                <label>Title:</label>
+                <input
+                  type="text"
+                  value={editText}
+                  onChange={(e) => setEditText(e.target.value)}
+                  className="todo-edit-input"
+                />
+              </div>
+              <div className="form-row">
+                <label>Date:</label>
+                <input
+                  type="date"
+                  value={editDate}
+                  onChange={(e) => setEditDate(e.target.value)}
+                  className="todo-edit-input"
+                />
+              </div>
+              <div className="form-row">
+                <label>Time:</label>
+                <input
+                  type="time"
+                  value={editTime}
+                  onChange={(e) => setEditTime(e.target.value)}
+                  className="todo-edit-input"
+                />
+              </div>
+              <div className="form-row">
+                <label>Note:</label>
+                <textarea
+                  value={noteText}
+                  onChange={(e) => setNoteText(e.target.value)}
+                  rows={4}
+                  className="todo-edit-input"
+                />
+              </div>
+            </div>
+          }
+          onConfirm={() => {
+            updateTodo(id, editText, editDate, editTime, noteText);
+            setShowEditModal(false);
+          }}
+          onCancel={() => setShowEditModal(false)}
         />
       )}
     </li>
