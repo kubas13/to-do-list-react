@@ -75,12 +75,15 @@ export default function App() {
   const updateTodo = (id, newTitle, newDate, newTime, newNote) => {
     setTodos((currentTodos) =>
       currentTodos.map((todo) =>
-        todo.id === id ? { ...todo,
-           title: newTitle ?? todo.title,
-           date: newDate ?? todo.date,
-           time: newTime ?? todo.time,
-           note: newNote ?? todo.note,
-           } : todo
+        todo.id === id
+          ? {
+              ...todo,
+              title: newTitle ?? todo.title,
+              date: newDate ?? todo.date,
+              time: newTime ?? todo.time,
+              note: newNote ?? todo.note,
+            }
+          : todo
       )
     );
   };

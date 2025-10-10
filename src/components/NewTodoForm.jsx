@@ -4,7 +4,7 @@ export function NewTodoForm(props) {
   const [newItem, setNewItem] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
-  const [priority, setPriority] = useState("Medium")
+  const [priority, setPriority] = useState("Medium");
   const [showModal, setShowModal] = useState(false);
   function handleSubmit(e) {
     e.preventDefault();
@@ -21,19 +21,16 @@ export function NewTodoForm(props) {
     setNewItem("");
     setDate("");
     setTime("");
-    setPriority("Medium")
+    setPriority("Medium");
   }
   function closeModal() {
     setShowModal(false);
   }
   return (
     <>
-      
       <form onSubmit={handleSubmit} className="new-item-form">
-        
         <label htmlFor="item">Add your thing to do</label>
         <div className="form-row">
-          
           <input
             value={newItem}
             onChange={(e) => setNewItem(e.target.value)}
@@ -43,7 +40,6 @@ export function NewTodoForm(props) {
           />
         </div>
         <div className="form-row">
-  
           <input
             type="time"
             value={time}

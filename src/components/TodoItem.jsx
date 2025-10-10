@@ -17,14 +17,13 @@ export function TodoItem({
   const [editText, setEditText] = useState(title);
   const [editDate, setEditDate] = useState(date);
   const [editTime, setEditTime] = useState(time);
+
   const [noteText, setNoteText] = useState(note || "");
   const [tempNote, setTempNote] = useState(note || "");
 
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showNoteModal, setShowNoteModal] = useState(false);
-
-  
 
   const handleSave = () => {
     updateTodo(id, editText, editDate, editTime, noteText);
@@ -53,40 +52,36 @@ export function TodoItem({
 
   return (
     <li className={completed ? "completed" : ""}>
-          <label>
-            <input
-              type="checkbox"
-              className="checkbox"
-              checked={completed}
-              onChange={(e) => toggleTodo(id, e.target.checked)}
-            />
-            <div className="todo-main">
-              <div className="todo-header">
-                <span className="todo-title">{title}</span>
-              </div>
-              {(date || time) && (
-                <div className="todo-meta">
-                  {date || "-"} {time || "-"}
-                </div>
-              )}
-            </div>
-          </label>
-
-          <div className="todo-actions">
-            <button
-              onClick={() => setShowEditModal(true)}
-              className="btn btn-edit"
-            >
-              Edit
-            </button>
-            <button onClick={openNoteModal} className="btn btn-note">
-              Note
-            </button>
-            <button onClick={handleDelete} className="btn btn-delete">
-              Delete
-            </button>
+      <label>
+        <input
+          type="checkbox"
+          className="checkbox"
+          checked={completed}
+          onChange={(e) => toggleTodo(id, e.target.checked)}
+        />
+        <div className="todo-main">
+          <div className="todo-header">
+            <span className="todo-title">{title}</span>
           </div>
-      
+          {(date || time) && (
+            <div className="todo-meta">
+              {date || "-"} {time || "-"}
+            </div>
+          )}
+        </div>
+      </label>
+
+      <div className="todo-actions">
+        <button onClick={() => setShowEditModal(true)} className="btn btn-edit">
+          Edit
+        </button>
+        <button onClick={openNoteModal} className="btn btn-note">
+          Note
+        </button>
+        <button onClick={handleDelete} className="btn btn-delete">
+          Delete
+        </button>
+      </div>
 
       {showNoteModal && (
         <Modal

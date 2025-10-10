@@ -10,7 +10,9 @@ export function Modal({ title, message, onConfirm, onCancel }) {
               Cancel
             </button>
           )}
-        <button className="btn btn-confirm" onClick={onConfirm}>OK</button>
+          <button className="btn btn-confirm" onClick={onConfirm}>
+            OK
+          </button>
         </div>
       </div>
     </div>
