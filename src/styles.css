@@ -486,7 +486,167 @@
   }
 }
 
+.has-todo {
+  position: relative;
+  background-color: hsl(200, 100%, 50%);
+  color: white;
+  font-weight: bold;
+  border-radius: 50%;
+  width: 1.5rem;
+  height: 1.5rem;
+  line-height: 1.5rem;
+  text-align: center;
+  margin: 0 auto;
+  pointer-events: none;
+}
 
+.view-toggle {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.view-toggle button {
+  position: relative;
+  padding: 0,5rem 1.2rem;
+  border-radius: 8px;
+  border: 1px solid hsl(200, 100%, 50%);
+  background: linear-gradient(145deg, hsl(200, 100%, 20%), hsl(200, 100%, 25%));
+  color: hsl(200, 100%, 90%);
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  z-index: 1;
+}
+
+.view-toggle button:hover {
+  background: linear-gradient(145deg, hsl(200, 100%, 25%), hsl(200, 100%, 30%));
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.35);
+}
+
+.view-toggle button.active {
+  background: linear-gradient(145deg, hsl(200, 100%, 45%), hsl(200, 100%, 50%));
+  border: 1px solid hsl(200, 100%, 70%);
+  color: white;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+  transform: translateY(0);
+
+}
+
+.view-toggle-indicator {
+  position: relative;
+  bottom: -4px;
+  width: 50%;
+  height: 4px;
+  background-color: hsl(200, 100%, 50%);
+  border-radius: 2px;
+  transition: transform 0.3 ease;
+}
+
+view.view-toggle-indicator.list {
+  transform: translateX(0%);
+}
+
+.view-toggle-indicator.calendar {
+  transform: translateX(100%);
+}
+
+.react-calendar {
+  border: none;
+  background: hsl(200, 100%, 15%);
+  border-radius: 12px;
+  padding: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  font-family: Arial, sans-serif;
+}
+
+.react-calendar__month-view__weekdays {
+  text-align: center;
+  color: hsl(200, 100%, 60%);
+  font-weight: bold;
+}
+
+.react-calendar__tile {
+  background-color: hsl(200, 100%, 20%);
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background 0.2s ease, transform 0.2s ease;
+  cursor: pointer;
+}
+
+.react-calendar__tile--now {
+  background: inherit;
+  border-radius: inherit;
+  color: inherit;
+  font-weight: normal;
+  pointer-events: auto;
+}
+
+.react-calendar__tile:hover {
+  background: hsl(200, 100%, 25%);
+  color: hsl(200, 100%, 90%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0, 0.3);
+}
+
+.react-calendar__tile > abbr {
+  position: relative;
+  z-index: 2;
+  font-weight: bold;
+  color: hsl(200, 100%, 60%);
+}
+
+.react-calendar__tile.has-todo {
+  background-color: hsl(200, 60%, 30%) !important;
+  border-radius: 8px !important;
+}
+
+
+
+.react-calendar__tile.has-todo:hover {
+  background-color: hsl(200, 100%, 30%) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+.react-calendar .react-calendar__tile--neighboringMonth {
+  background-color: hsl(200, 100%, 10%) !important;
+  color: hsl(200, 10%, 45%) !important;
+  opacity: 0.7 !important;
+  border-radius: 8px !important;
+}
+
+.react-calendar__tile--active {
+  background: hsl(200, 100%, 40%);
+  color: white;
+}
+
+.react-calendar__tile--now {
+  background: none !important;
+  color: black;
+  font-weight: bold;
+}
+
+.react-calendar__tile.react-calendar__tile--now {
+  background-color: hsl(239, 100%, 22%);
+  color: black;
+  font-weight: bold;
+}
+
+.react-calendar__tile.has-todo.react-calendar__tile--now {
+  background-color: hsl(0, 100%, 40%);
+  color: white;
+  font-weight: bold;
+  border-radius: 8px;
+}
 
 @keyframes fadeIn {
   from { opacity: 0; transform: scale(0.9); }
