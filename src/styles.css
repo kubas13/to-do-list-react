@@ -126,7 +126,7 @@
   .list {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: rem;
     border: 2px solid hsl(200, 100%, 50%);
     border-radius: 12px;
     padding: 1rem;
@@ -142,7 +142,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.5rem 0.75rem;
+    padding: 1rem 0.75rem;
     border-radius: 8px;
     background-color: hsl(200, 100%, 20%);
     transition: 0.2s;
@@ -161,7 +161,7 @@
   
   .list li label {
     display: flex;
-    gap: 0.25rem;
+    gap: 1rem;
     cursor: pointer;
     align-items: center;
   }
@@ -216,6 +216,13 @@
   
   .list li:has(input:checked) label:hover::before {
     background: hsl(200, 100%, 30%);
+  }
+
+  .todo-main {
+    display: flex;
+    align-items: stretch;
+    justify-content:center;
+    flex-direction:column;
   }
 
   .modal-overlay {
@@ -368,7 +375,7 @@
   border: 1px solid hsl(200, 100%, 40%);
   border-radius: 0.25rem;
   background: hsl(200, 100%, 30%);
-  color: hsl(0, 0%, 0%)
+  color: white;
 }
 
 .todo-note {
@@ -486,6 +493,24 @@
   }
 }
 
+.calendar-task {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 12px;
+  background: hsl(200, 100%, 12%);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.calendar-task li {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background: hsl(200, 100%, 18%);
+}
+
 .has-todo {
   position: relative;
   background-color: hsl(200, 100%, 50%);
@@ -497,7 +522,6 @@
   line-height: 1.5rem;
   text-align: center;
   margin: 0 auto;
-  pointer-events: none;
 }
 
 .view-toggle {
@@ -564,6 +588,7 @@ view.view-toggle-indicator.list {
   font-family: Arial, sans-serif;
 }
 
+
 .react-calendar__month-view__weekdays {
   text-align: center;
   color: hsl(200, 100%, 60%);
@@ -580,6 +605,7 @@ view.view-toggle-indicator.list {
   align-items: center;
   transition: background 0.2s ease, transform 0.2s ease;
   cursor: pointer;
+
 }
 
 .react-calendar__tile--now {
@@ -605,23 +631,23 @@ view.view-toggle-indicator.list {
 }
 
 .react-calendar__tile.has-todo {
-  background-color: hsl(200, 60%, 30%) !important;
-  border-radius: 8px !important;
+  background-color: hsl(200, 60%, 30%);
+  border-radius: 8px ;
 }
 
 
 
 .react-calendar__tile.has-todo:hover {
-  background-color: hsl(200, 100%, 30%) !important;
+  background-color: hsl(200, 100%, 30%) ;
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0,0,0,0.3);
 }
 
 .react-calendar .react-calendar__tile--neighboringMonth {
-  background-color: hsl(200, 100%, 10%) !important;
-  color: hsl(200, 10%, 45%) !important;
-  opacity: 0.7 !important;
-  border-radius: 8px !important;
+  background-color: hsl(200, 100%, 10%) ;
+  color: hsl(200, 10%, 45%) ;
+  opacity: 0.7 ;
+  border-radius: 8px;
 }
 
 .react-calendar__tile--active {
@@ -630,19 +656,17 @@ view.view-toggle-indicator.list {
 }
 
 .react-calendar__tile--now {
-  background: none !important;
+  background: none ;
   color: black;
   font-weight: bold;
 }
 
 .react-calendar__tile.react-calendar__tile--now {
-  background-color: hsl(239, 100%, 22%);
   color: black;
   font-weight: bold;
 }
 
 .react-calendar__tile.has-todo.react-calendar__tile--now {
-  background-color: hsl(0, 100%, 40%);
   color: white;
   font-weight: bold;
   border-radius: 8px;
