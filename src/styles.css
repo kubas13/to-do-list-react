@@ -532,7 +532,7 @@
 .calendar-tasks .todo-actions {
   display: flex;
   gap: 0.4rem;
-  flex-direction: column;
+  
 }
 
 .calendar-tasks .todo-actions .btn {
@@ -719,6 +719,31 @@ view.view-toggle-indicator.list {
   color: white;
   font-weight: bold;
   border-radius: 8px;
+}
+
+.enable-notifications-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 30px 0;
+}
+
+.enable-notifications-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 500;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: background-color 0.3 ease, transform 0.2 ease;
+}
+
+.enable-notifications-btn:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
 }
 
 @keyframes fadeIn {

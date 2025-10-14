@@ -7,6 +7,8 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { TodoItem } from "./components/TodoItem";
 
+
+
 const formatDate = (date) => {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -35,7 +37,49 @@ export default function App() {
 
   let undoTimeoutRef = null;
 
-  const addTodo = ({ title, date, time, note = "", priority }) => {
+  const requestNotificationPermision = () => {
+    if ("Notification" in window && Notification.permission === "default") {
+      Notification.requestPermission().then((permission) => {
+        alert("Notification enabled!");
+      });
+    }
+  };
+
+  const showNotification = (todo) => {
+  if("Notification" in window && Notification.permission === "granted") {
+    new Notification("Reminder: " + todo.title, {
+      body: todo.note ? todo.note : "Time to complete your task!"
+    });
+  }
+};
+
+ 
+
+
+
+useEffect(() => {
+  const interval = setInterval(() => {
+    const now = new Date();
+    todos.forEach((todo) => {
+      if (!todo.completed && todo.date && todo.time) {
+        const [hours, minutes] = todo.time.split(":").map(Number);
+        const todoDateTime = new Date(todo.date);
+        todoDateTime.setHours(hours, minutes, 0, 0)
+  
+
+        if (
+          todoDateTime.getTime() <= now.getTime() &&
+          todoDateTime.getTime() > now.getTime() - 60000
+        ) {
+          showNotification(todo);
+        }
+      }
+    })
+  }, 60000);
+  return () => clearInterval;
+}, [todos]);
+
+  const addTodo = ({ title, date, time, note = "",}) => {
     setTodos((currentTodos) => [
       ...currentTodos,
       {
@@ -153,7 +197,28 @@ export default function App() {
       )}
 
       <h1 className="header">To Do List</h1>
+      { "Notification" in window && Notification.permission === "default" && (
+        <div className="enable-notifications-container">
+        <button
+        className="enable-notifications-btn"
+        onClick={() => {
+          Notification.requestPermission().then((permission) => {
+            if (permission === "granted") {
+              new Notification("Notifications enabled!",  {
+                body: "You will now recieve reminders for your tasks",   
+              });
+            }else {
+              alert("You denied notifications - you can enable them in browser settings.");
+            }
+          });
+        }}
+        >
+          Enable Notifications 
+        </button>
+        </div>
+      )}
 
+      
       <div className="view-toggle">
         <button
           onClick={() => setView("list")}
