@@ -31,6 +31,7 @@ export default function App() {
   const [showUndo, setShowUndo] = useState(false);
   const [view, setView] = useState("list");
   const [selectDate, setSelectDate] = useState(null);
+  const [editModalData, setEditModalData] = useState(null);
 
   let undoTimeoutRef = null;
 
@@ -207,6 +208,7 @@ export default function App() {
             toggleTodo={toggleTodo}
             deleteTodo={deleteTodo}
             updateTodo={updateTodo}
+            onEdit={(todoData => setEditModalData(todoData))}
           />
           {showDeleteCompleteModal && (
             <Modal
@@ -248,6 +250,7 @@ export default function App() {
                   toggleTodo={toggleTodo}
                   deleteTodo={deleteTodo}
                   updateTodo={updateTodo}
+                  onEdit={(todoData) => setEditModalData(todoData)}
                 />
               ))}
           </ul>
@@ -266,6 +269,65 @@ export default function App() {
           <span>Task "{lastDeleted?.title}" was deleted.</span>
           <button onClick={handleUndo}>Undo</button>
         </div>
+      )}
+      {editModalData && (
+        <Modal
+          title="Edit Task"
+          message={
+            <div className="edit-form">
+              <div className="form-row">
+                <label>Title:</label>
+                <input
+                type="text"
+                value={editModalData.title}
+                onChange={(e) => 
+                  setEditModalData({...editModalData, title: e.target.value})
+                }
+                className="todo-edit-input"
+                />
+            </div>
+            <div className="form-row">
+              <label>Date:</label>
+              <input
+              type="date"
+              value={editModalData.date}
+              onChange={(e) => 
+                setEditModalData({...editModalData, date: e.target.value})
+              }
+              className="todo-edit-input"
+              />
+              </div>
+              <div className="form-row">
+                <label>Time:</label>
+                <input
+                  type="time"
+                  value={editModalData.time}
+                  onChange={(e) => 
+                    setEditModalData({...editModalData, time: e.target.value})
+                  }
+                  className="todo-edit-input"
+                  />
+              </div>
+              <div className="form-row">
+                <label>Note:</label>
+                <textarea
+                  value={editModalData.note || ""}
+                  onChange={(e) => {
+                    setEditModalData({...editModalData, note: e.target.value})
+                  }}
+                  rows={4}
+                  className="todo-edit-input"
+                  />
+              </div>
+            </div>
+          }
+          onConfirm={() => {
+            const {id, title, date, time, note} = editModalData;
+            updateTodo(id, title, date, time, note);
+            setEditModalData(null)
+          }}
+          onCancel={() => setEditModalData(null)}
+        />
       )}
     </div>
   );

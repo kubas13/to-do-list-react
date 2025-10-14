@@ -532,6 +532,7 @@
 .calendar-tasks .todo-actions {
   display: flex;
   gap: 0.4rem;
+  flex-direction: column;
 }
 
 .calendar-tasks .todo-actions .btn {
