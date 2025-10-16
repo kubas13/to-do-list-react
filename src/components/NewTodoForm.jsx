@@ -4,8 +4,8 @@ export function NewTodoForm(props) {
   const [newItem, setNewItem] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
-  const [priority, setPriority] = useState("Medium");
   const [showModal, setShowModal] = useState(false);
+
   function handleSubmit(e) {
     e.preventDefault();
     if (newItem.trim() === "") {
@@ -16,15 +16,20 @@ export function NewTodoForm(props) {
       title: newItem,
       date: date || "No date",
       time: time || "No time",
-      priority,
     });
     setNewItem("");
     setDate("");
     setTime("");
-    setPriority("Medium");
   }
   function closeModal() {
     setShowModal(false);
+  }
+
+  function handleKeyDown(e) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleSubmit(e)
+    }
   }
   return (
     <>
@@ -34,6 +39,7 @@ export function NewTodoForm(props) {
           <input
             value={newItem}
             onChange={(e) => setNewItem(e.target.value)}
+            onKeyDown={handleKeyDown}
             type="text"
             id="item"
             placeholder="Task title..."
