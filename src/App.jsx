@@ -6,6 +6,9 @@ import Modal from "./components/CustomModal";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { TodoItem } from "./components/TodoItem";
+import { ProgressBar } from "./components/ProgressBar";
+
+
 
 
 
@@ -186,6 +189,9 @@ useEffect(() => {
 
   console.log("todos:", todos, "filter:", filter, "sort:", sort);
 
+
+
+
   return (
     <div className="App">
       {modalOpen && (
@@ -197,6 +203,7 @@ useEffect(() => {
       )}
 
       <h1 className="header">To Do List</h1>
+      <ProgressBar todos={todos} />
       { "Notification" in window && Notification.permission === "default" && (
         <div className="enable-notifications-container">
         <button
@@ -268,26 +275,7 @@ useEffect(() => {
               <button onClick={handleDeleteAllClick}>Delete all</button>
             </div>
           </div>
-          <div className="progress-section">
-            <h3>Daily Progress</h3>
-            <div className="progress-bar">
-    <div
-      className="progress-fill"
-      style={{
-        width: `${Math.round(
-          (todos.filter((t) => t.completed).length / (todos.length || 1)) * 100
-        )}%`,
-      }}
-    ></div>
-  </div>
-  <p className="progress-text">
-    {todos.length > 0
-      ? `${Math.round(
-          (todos.filter((t) => t.completed).length / todos.length) * 100
-        )}% completed`
-      : "No tasks yet"}
-            </p>
-          </div>
+          
           <TodoList
             todos={filteredAndSortedTodos}
             toggleTodo={toggleTodo}
@@ -416,4 +404,7 @@ useEffect(() => {
       )}
     </div>
   );
+  
 }
+
+
