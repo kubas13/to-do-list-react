@@ -268,6 +268,26 @@ useEffect(() => {
               <button onClick={handleDeleteAllClick}>Delete all</button>
             </div>
           </div>
+          <div className="progress-section">
+            <h3>Daily Progress</h3>
+            <div className="progress-bar">
+    <div
+      className="progress-fill"
+      style={{
+        width: `${Math.round(
+          (todos.filter((t) => t.completed).length / (todos.length || 1)) * 100
+        )}%`,
+      }}
+    ></div>
+  </div>
+  <p className="progress-text">
+    {todos.length > 0
+      ? `${Math.round(
+          (todos.filter((t) => t.completed).length / todos.length) * 100
+        )}% completed`
+      : "No tasks yet"}
+            </p>
+          </div>
           <TodoList
             todos={filteredAndSortedTodos}
             toggleTodo={toggleTodo}
